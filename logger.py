@@ -21,13 +21,13 @@ def to_sentence_case(name):
             capitalize_next = True
     return result
 
-# Repeatedly prompt until a valid name is entered, then returns it in sentence case
+# Repeatedly prompt until a valid name is entered, then return it in sentence case
 def get_valid_name(prompt):
     while True:
         value = input(prompt)
         if is_valid_name(value):
             return to_sentence_case(value)
-        print("Invalid input, try again.")
+        print("Invalid input, try again")
 
 # Check whether a grade starts with E or O followed by digits (hyphen optional)
 def is_valid_grade(grade):
@@ -45,13 +45,52 @@ def is_valid_grade(grade):
         return False
     return True
 
-# Repeatedly prompt until a valid grade is entered, then returns it uppercase
+# Repeatedly prompt until a valid grade is entered, then return it uppercase
 def get_valid_grade(prompt):
     while True:
         value = input(prompt)
         if is_valid_grade(value):
             return value.upper()
-        print("Invalid input, try again.")
+        print("Invalid input, try again")
+
+# Check whether an email is in the form username@domain.mil
+def is_valid_email(email):
+    if email == '':
+        return False
+    if email.count('@') != 1:
+        return False
+    username, domain = email.split('@')
+    if username == '':
+        return False
+    if domain == '':
+        return False
+    if not domain.endswith('.mil'):
+        return False
+    return True
+
+# Repeatedly prompt until a valid email is entered
+def get_valid_email(prompt):
+    while True:
+        value = input(prompt)
+        if is_valid_email(value):
+            return value
+        print("Invalid input, try again")
+
+# Check whether a phone number is exactly 10 digits
+def is_valid_phone(phone):
+    if len(phone) != 10:
+        return False
+    if not phone.isdigit():
+        return False
+    return True
+
+# Repeatedly prompt until a valid phone number is entered
+def get_valid_phone(prompt):
+    while True:
+        value = input(prompt)
+        if is_valid_phone(value):
+            return value
+        print("Invalid input, try again")
 
 # Gather all shift report fields from the user
 def log_new_shift():
@@ -60,8 +99,8 @@ def log_new_shift():
     member_middle_initial = get_valid_name("Enter middle initial: ")
     member_rank = input("Enter rank: ")
     member_grade = get_valid_grade("Enter grade (e.g. E-3): ")
-    member_email = input("Enter email: ")
-    member_phone = input("Enter phone number: ")
+    member_email = get_valid_email("Enter email: ")
+    member_phone = get_valid_phone("Enter phone number: ")
     shift_start_year = input("Enter shift start year (YYYY): ")
     shift_start_month = input("Enter shift start month: ")
     shift_start_day = input("Enter shift start day: ")
