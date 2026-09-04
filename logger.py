@@ -1,7 +1,22 @@
+def is_valid_name(name):
+    if name == '':
+        return False
+    for char in name:
+        if not (char.isalpha() or char == '-' or char == "'"):
+            return False
+    return True
+
+def get_valid_name(prompt):
+    while True:
+        value = input(prompt)
+        if is_valid_name(value):
+            return value
+        print("Invalid input, try again.")
+
 def log_new_shift():
-    member_last_name = input("Enter last name: ")
-    member_first_name = input("Enter first name: ")
-    member_middle_initial = input("Enter middle initial: ")
+    member_last_name = get_valid_name("Enter last name: ")
+    member_first_name = get_valid_name("Enter first name: ")
+    member_middle_initial = get_valid_name("Enter middle initial: ")
     member_rank = input("Enter rank: ")
     member_grade = input("Enter grade (e.g. E-3): ")
     member_email = input("Enter email: ")
