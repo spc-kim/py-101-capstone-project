@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 # Check whether a name contains only letters, hyphens, and apostrophes
 def is_valid_name(name):
     if name == '':
@@ -205,6 +207,7 @@ def get_non_empty(prompt):
 
 # Gather all shift report fields from the user
 def log_new_shift():
+    entry_started_timestamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     # Gather information about the member
     member_last_name = get_valid_name("Enter last name: ")
     member_first_name = get_valid_name("Enter first name: ")
@@ -212,12 +215,14 @@ def log_new_shift():
     member_grade, member_rank = get_rank_and_grade_selection()
     member_email = get_valid_email("Enter email: ")
     member_phone = get_valid_phone("Enter phone number: ")
-    # Gather information about the shift
+    # Gather information about the shift start
     shift_start_year = get_valid_year("Enter shift start year (YYYY): ")
     shift_start_month = get_valid_month("Enter shift start month: ")
     shift_start_day = get_valid_day("Enter shift start day: ", shift_start_month)
     shift_start_hour = get_valid_hour("Enter shift start hour (HH, 24-hour): ")
     shift_start_minute = get_valid_minute("Enter shift start minute (MM): ")
+    print("Starting shift")
+    # Gather information about the shift end
     shift_end_year = get_valid_year("Enter shift end year (YYYY): ")
     shift_end_month = get_valid_month("Enter shift end month: ")
     shift_end_day = get_valid_day("Enter shift end day: ", shift_end_month)
@@ -228,3 +233,5 @@ def log_new_shift():
     task_completed = get_non_empty("Enter tasks completed: ")
     task_remaining = get_non_empty("Enter tasks remaining: ")
     task_remarks = get_non_empty("Enter tasks remarks: ")
+    input("Press Enter to confirm your shift is complete: ")
+    confirmed_complete_timestamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')

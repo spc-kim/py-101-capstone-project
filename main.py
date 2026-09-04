@@ -1,5 +1,7 @@
+import logger
+
 def main():
-    pass
+    logger.log_new_shift()
 
 if __name__ == "__main__":
-    pass
+    main()
