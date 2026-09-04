@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, timezone
 
 # Check whether a name contains only letters, hyphens, and apostrophes, and at least one letter
@@ -137,6 +138,27 @@ def get_non_empty(prompt):
                 return value
         else:
             print("Invalid input, try again")
+
+# List saved reports and let the user view one
+def view_reports():
+    filenames = os.listdir("logs")
+    report_filenames = []
+    for filename in filenames:
+        if filename.endswith(".txt"):
+            report_filenames.append(filename)
+    if len(report_filenames) == 0:
+        print("No saved reports found")
+        return
+    print("Saved reports:")
+    index = 1
+    for filename in report_filenames:
+        print(str(index) + ". " + filename)
+        index = index + 1
+    choice = input("Enter a number to view a report, or press Enter to go back: ")
+    if choice.isdigit() and 1 <= int(choice) <= len(report_filenames):
+        selected_filename = report_filenames[int(choice) - 1]
+        with open("logs/" + selected_filename, "r") as file:
+            print(file.read())
 
 # Write the report text to a file in the logs folder
 def write_report_to_file(filename, report_text):

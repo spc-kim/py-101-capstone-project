@@ -1,0 +1,10 @@
+NAME:					Last, Firsty ML.
+RANK/GRADE:				2d Lt (O-1)
+EMAIL:					firsty.last@nsa.ic.gov
+PHONE:					1234567890
+SHIFT STARTED (UTC):	2026-09-04-191519Z
+SHIFT COMPLETED (UTC):	2026-09-04-191620Z
+TASKS ASSIGNED:			All the intel tasks
+TASKS COMPLETED:		None of the space sys tasks
+TASKS REMAINING:		All of the cyber tasks
+REMARKS:				Not much work to do remaining
