@@ -149,22 +149,22 @@ def log_new_shift():
     task_remarks = get_non_empty("Enter tasks remarks: ")
 
     # Get input confirmation of shift ending
-    input("Press Enter to confirm your shift is complete (Enter): ")
+    input("Confirm your shift is complete (Enter): ")
     confirmed_complete_timestamp = datetime.now(timezone.utc).strftime('%Y-%m-%d-%H%M%SZ')
 
     # Build the report text
     full_name = member_last_name + ", " + member_first_name + " " + member_middle_initial + "."
     report_text = ""
-    report_text = report_text + "NAME:\t\t\t" + full_name + "\n"
-    report_text = report_text + "RANK/GRADE:\t\t" + member_rank + " (" + member_grade + ")\n"
-    report_text = report_text + "EMAIL:\t\t\t" + member_email + "\n"
-    report_text = report_text + "PHONE:\t\t\t" + member_phone + "\n"
+    report_text = report_text + "NAME:\t\t\t\t\t" + full_name + "\n"
+    report_text = report_text + "RANK/GRADE:\t\t\t\t" + member_rank + " (" + member_grade + ")\n"
+    report_text = report_text + "EMAIL:\t\t\t\t\t" + member_email + "\n"
+    report_text = report_text + "PHONE:\t\t\t\t\t" + member_phone + "\n"
     report_text = report_text + "SHIFT STARTED (UTC):\t" + entry_started_timestamp + "\n"
     report_text = report_text + "SHIFT COMPLETED (UTC):\t" + confirmed_complete_timestamp + "\n"
-    report_text = report_text + "TASKS ASSIGNED:\t\t" + task_assigned + "\n"
+    report_text = report_text + "TASKS ASSIGNED:\t\t\t" + task_assigned + "\n"
     report_text = report_text + "TASKS COMPLETED:\t\t" + task_completed + "\n"
     report_text = report_text + "TASKS REMAINING:\t\t" + task_remaining + "\n"
-    report_text = report_text + "REMARKS:\t\t\t" + task_remarks + "\n"
+    report_text = report_text + "REMARKS:\t\t\t\t" + task_remarks + "\n"
 
     # Write the report to the logs folder
     filename = entry_started_timestamp + "_" + confirmed_complete_timestamp + ".txt"
