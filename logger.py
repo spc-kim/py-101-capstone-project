@@ -108,6 +108,42 @@ def get_valid_year(prompt):
             return value
         print("Invalid input, try again")
 
+# Check whether a month is a number from 1 to 12
+def is_valid_month(month):
+    if not month.isdigit():
+        return False
+    month_num = int(month)
+    return 1 <= month_num <= 12
+
+# Repeatedly prompt until a valid month is entered
+def get_valid_month(prompt):
+    while True:
+        value = input(prompt)
+        if is_valid_month(value):
+            return value
+        print("Invalid input, try again")
+
+# Check whether a day is valid for the given month
+def is_valid_day(day, month):
+    if not day.isdigit():
+        return False
+    day_num = int(day)
+    month_num = int(month)
+    if month_num in (4, 6, 9, 11):
+        return 1 <= day_num <= 30
+    elif month_num == 2:
+        return 1 <= day_num <= 29
+    else:
+        return 1 <= day_num <= 31
+
+# Repeatedly prompt until a valid day is entered for the given month
+def get_valid_day(prompt, month):
+    while True:
+        value = input(prompt)
+        if is_valid_day(value, month):
+            return value
+        print("Invalid input, try again")
+
 # Gather all shift report fields from the user
 def log_new_shift():
     member_last_name = get_valid_name("Enter last name: ")
@@ -118,13 +154,13 @@ def log_new_shift():
     member_email = get_valid_email("Enter email: ")
     member_phone = get_valid_phone("Enter phone number: ")
     shift_start_year = get_valid_year("Enter shift start year (YYYY): ")
-    shift_start_month = input("Enter shift start month: ")
-    shift_start_day = input("Enter shift start day: ")
+    shift_start_month = get_valid_month("Enter shift start month: ")
+    shift_start_day = get_valid_day("Enter shift start day: ", shift_start_month)
     shift_start_hour = input("Enter shift start hour (HH, 24-hour): ")
     shift_start_minute = input("Enter shift start minute (MM): ")
     shift_end_year = get_valid_year("Enter shift end year (YYYY): ")
-    shift_end_month = input("Enter shift end month: ")
-    shift_end_day = input("Enter shift end day: ")
+    shift_end_month = get_valid_month("Enter shift end month: ")
+    shift_end_day = get_valid_day("Enter shift end day: ", shift_end_month)
     shift_end_hour = input("Enter shift end hour (HH, 24-hour): ")
     shift_end_minute = input("Enter shift end minute (MM): ")
     task_assigned = input("Enter tasks assigned: ")
