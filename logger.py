@@ -34,6 +34,14 @@ def get_valid_name(prompt):
             return to_sentence_case(value)
         print("Invalid input, try again")
 
+# Repeatedly prompt until a valid initial is entered, then return it uppercase
+def get_valid_initial(prompt):
+    while True:
+        value = input(prompt)
+        if is_valid_name(value):
+            return value.upper()
+        print("Invalid input, try again")
+
 # Prompt the user through a guided menu to select a rank and grade
 def get_rank_and_grade_selection():
     while True:
@@ -113,22 +121,51 @@ def get_non_empty(prompt):
             return value
         print("Invalid input, try again")
 
-# Gather all shift report fields from the user
+# Write the report text to a file in the logs folder
+def write_report_to_file(filename, report_text):
+    file_path = "logs/" + filename
+    with open(file_path, "w") as file:
+        file.write(report_text)
+
+# Log a new shift based on user input
 def log_new_shift():
-    entry_started_timestamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+
+    # Clock entry timestamp
+    entry_started_timestamp = datetime.now(timezone.utc).strftime('%Y-%m-%d-%H%M%SZ')
     print("Starting your shift...")
-    # Gather information about the member
+
+    # Gather input information about the member
     member_last_name = get_valid_name("Enter last name: ")
     member_first_name = get_valid_name("Enter first name: ")
-    member_middle_initial = get_valid_name("Enter middle initial: ")
+    member_middle_initial = get_valid_initial("Enter middle initial: ")
     member_grade, member_rank = get_rank_and_grade_selection()
     member_email = get_valid_email("Enter email: ")
     member_phone = get_valid_phone("Enter phone number: ")
-    # Gather information about the tasks
+
+    # Gather input information about the tasks
     task_assigned = get_non_empty("Enter tasks assigned: ")
     task_completed = get_non_empty("Enter tasks completed: ")
     task_remaining = get_non_empty("Enter tasks remaining: ")
     task_remarks = get_non_empty("Enter tasks remarks: ")
-    # Get confirmation of shift ending
+
+    # Get input confirmation of shift ending
     input("Press Enter to confirm your shift is complete (Enter): ")
-    confirmed_complete_timestamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+    confirmed_complete_timestamp = datetime.now(timezone.utc).strftime('%Y-%m-%d-%H%M%SZ')
+
+    # Build the report text
+    full_name = member_last_name + ", " + member_first_name + " " + member_middle_initial + "."
+    report_text = ""
+    report_text = report_text + "NAME:\t\t\t" + full_name + "\n"
+    report_text = report_text + "RANK/GRADE:\t\t" + member_rank + " (" + member_grade + ")\n"
+    report_text = report_text + "EMAIL:\t\t\t" + member_email + "\n"
+    report_text = report_text + "PHONE:\t\t\t" + member_phone + "\n"
+    report_text = report_text + "SHIFT STARTED (UTC):\t" + entry_started_timestamp + "\n"
+    report_text = report_text + "SHIFT COMPLETED (UTC):\t" + confirmed_complete_timestamp + "\n"
+    report_text = report_text + "TASKS ASSIGNED:\t\t" + task_assigned + "\n"
+    report_text = report_text + "TASKS COMPLETED:\t\t" + task_completed + "\n"
+    report_text = report_text + "TASKS REMAINING:\t\t" + task_remaining + "\n"
+    report_text = report_text + "REMARKS:\t\t\t" + task_remarks + "\n"
+
+    # Write the report to the logs folder
+    filename = entry_started_timestamp + "_" + confirmed_complete_timestamp + ".txt"
+    write_report_to_file(filename, report_text)
