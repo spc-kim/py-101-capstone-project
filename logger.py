@@ -1,13 +1,16 @@
 from datetime import datetime, timezone
 
-# Check whether a name contains only letters, hyphens, and apostrophes
+# Check whether a name contains only letters, hyphens, and apostrophes, and at least one letter
 def is_valid_name(name):
     if name == '':
         return False
+    has_letter = False
     for char in name:
-        if not (char.isalpha() or char == '-' or char == "'"):
+        if char.isalpha():
+            has_letter = True
+        elif char != '-' and char != "'":
             return False
-    return True
+    return has_letter
 
 # Capitalize the first letter of a name and the first letter after any hyphen or apostrophe
 def to_sentence_case(name):
@@ -69,7 +72,8 @@ def is_valid_email(email):
         return False
     if domain == '':
         return False
-    if not (domain.endswith('.mil') or domain.endswith('.gov')):
+    domain_lower = domain.lower()
+    if not (domain_lower.endswith('.mil') or domain_lower.endswith('.gov')):
         return False
     return True
 
