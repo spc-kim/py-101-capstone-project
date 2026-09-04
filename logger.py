@@ -97,102 +97,6 @@ def get_valid_phone(prompt):
             return value
         print("Invalid input, try again")
 
-# Check whether a year is exactly four digits
-def is_valid_year(year):
-    if len(year) != 4:
-        return False
-    if not year.isdigit():
-        return False
-    return True
-
-# Repeatedly prompt until a valid year is entered
-def get_valid_year(prompt):
-    while True:
-        value = input(prompt)
-        if is_valid_year(value):
-            return value
-        print("Invalid input, try again")
-
-# Check whether a month is a number from 1 to 12
-def is_valid_month(month):
-    if not month.isdigit():
-        return False
-    month_num = int(month)
-    return 1 <= month_num <= 12
-
-# Repeatedly prompt until a valid month is entered
-def get_valid_month(prompt):
-    while True:
-        value = input(prompt)
-        if is_valid_month(value):
-            return value
-        print("Invalid input, try again")
-
-# Check whether a day is valid for the given month
-def is_valid_day(day, month):
-    if not day.isdigit():
-        return False
-    day_num = int(day)
-    month_num = int(month)
-    if month_num in (4, 6, 9, 11):
-        return 1 <= day_num <= 30
-    elif month_num == 2:
-        return 1 <= day_num <= 29
-    else:
-        return 1 <= day_num <= 31
-
-# Repeatedly prompt until a valid day is entered for the given month
-def get_valid_day(prompt, month):
-    while True:
-        value = input(prompt)
-        if is_valid_day(value, month):
-            return value
-        print("Invalid input, try again")
-
-# Check whether an hour is valid military time (00-23)
-def is_valid_hour(hour):
-    if len(hour) != 2:
-        return False
-    if not hour.isdigit():
-        return False
-    first = hour[0]
-    second = hour[1]
-    if first not in ('0', '1', '2'):
-        return False
-    if first == '2' and second not in ('0', '1', '2', '3'):
-        return False
-    return True
-
-# Repeatedly prompt until a valid hour is entered
-def get_valid_hour(prompt):
-    while True:
-        value = input(prompt)
-        if is_valid_hour(value):
-            return value
-        print("Invalid input, try again")
-
-# Check whether a minute is valid (00-59)
-def is_valid_minute(minute):
-    if len(minute) != 2:
-        return False
-    if not minute.isdigit():
-        return False
-    first = minute[0]
-    second = minute[1]
-    if first not in ('0', '1', '2', '3', '4', '5'):
-        return False
-    if second not in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
-        return False
-    return True
-
-# Repeatedly prompt until a valid minute is entered
-def get_valid_minute(prompt):
-    while True:
-        value = input(prompt)
-        if is_valid_minute(value):
-            return value
-        print("Invalid input, try again")
-
 # Check whether the input is not empty
 def is_not_empty(text):
     return text != ''
@@ -208,6 +112,7 @@ def get_non_empty(prompt):
 # Gather all shift report fields from the user
 def log_new_shift():
     entry_started_timestamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+    print("Starting your shift...")
     # Gather information about the member
     member_last_name = get_valid_name("Enter last name: ")
     member_first_name = get_valid_name("Enter first name: ")
@@ -215,23 +120,11 @@ def log_new_shift():
     member_grade, member_rank = get_rank_and_grade_selection()
     member_email = get_valid_email("Enter email: ")
     member_phone = get_valid_phone("Enter phone number: ")
-    # Gather information about the shift start
-    shift_start_year = get_valid_year("Enter shift start year (YYYY): ")
-    shift_start_month = get_valid_month("Enter shift start month: ")
-    shift_start_day = get_valid_day("Enter shift start day: ", shift_start_month)
-    shift_start_hour = get_valid_hour("Enter shift start hour (HH, 24-hour): ")
-    shift_start_minute = get_valid_minute("Enter shift start minute (MM): ")
-    print("Starting shift")
-    # Gather information about the shift end
-    shift_end_year = get_valid_year("Enter shift end year (YYYY): ")
-    shift_end_month = get_valid_month("Enter shift end month: ")
-    shift_end_day = get_valid_day("Enter shift end day: ", shift_end_month)
-    shift_end_hour = get_valid_hour("Enter shift end hour (HH, 24-hour): ")
-    shift_end_minute = get_valid_minute("Enter shift end minute (MM): ")
     # Gather information about the tasks
     task_assigned = get_non_empty("Enter tasks assigned: ")
     task_completed = get_non_empty("Enter tasks completed: ")
     task_remaining = get_non_empty("Enter tasks remaining: ")
     task_remarks = get_non_empty("Enter tasks remarks: ")
-    input("Press Enter to confirm your shift is complete: ")
+    # Get confirmation of shift ending
+    input("Press Enter to confirm your shift is complete (Enter): ")
     confirmed_complete_timestamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
