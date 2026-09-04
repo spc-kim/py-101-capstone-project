@@ -31,16 +31,24 @@ def get_valid_name(prompt):
     while True:
         value = input(prompt)
         if is_valid_name(value):
-            return to_sentence_case(value)
-        print("Invalid input, try again")
+            result = to_sentence_case(value)
+            confirm = input("You entered: " + result + ". Confirm? (Y/N): ")
+            if confirm.upper() == 'Y':
+                return result
+        else:
+            print("Invalid input, try again")
 
 # Repeatedly prompt until a valid initial is entered, then return it uppercase
 def get_valid_initial(prompt):
     while True:
         value = input(prompt)
         if is_valid_name(value):
-            return value.upper()
-        print("Invalid input, try again")
+            result = value.upper()
+            confirm = input("You entered: " + result + ". Confirm? (Y/N): ")
+            if confirm.upper() == 'Y':
+                return result
+        else:
+            print("Invalid input, try again")
 
 # Prompt the user through a guided menu to select a rank and grade
 def get_rank_and_grade_selection():
@@ -90,8 +98,11 @@ def get_valid_email(prompt):
     while True:
         value = input(prompt)
         if is_valid_email(value):
-            return value
-        print("Invalid input, try again")
+            confirm = input("You entered: " + value + ". Confirm? (Y/N): ")
+            if confirm.upper() == 'Y':
+                return value
+        else:
+            print("Invalid input, try again")
 
 # Check whether a phone number is exactly 10 digits
 def is_valid_phone(phone):
@@ -106,8 +117,11 @@ def get_valid_phone(prompt):
     while True:
         value = input(prompt)
         if is_valid_phone(value):
-            return value
-        print("Invalid input, try again")
+            confirm = input("You entered: " + value + ". Confirm? (Y/N): ")
+            if confirm.upper() == 'Y':
+                return value
+        else:
+            print("Invalid input, try again")
 
 # Check whether the input is not empty
 def is_not_empty(text):
@@ -118,8 +132,11 @@ def get_non_empty(prompt):
     while True:
         value = input(prompt)
         if is_not_empty(value):
-            return value
-        print("Invalid input, try again")
+            confirm = input("You entered: " + value + ". Confirm? (Y/N): ")
+            if confirm.upper() == 'Y':
+                return value
+        else:
+            print("Invalid input, try again")
 
 # Write the report text to a file in the logs folder
 def write_report_to_file(filename, report_text):
