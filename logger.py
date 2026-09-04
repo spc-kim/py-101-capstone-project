@@ -29,6 +29,32 @@ def get_valid_name(prompt):
             return to_sentence_case(value)
         print("Invalid input, try again")
 
+# Prompt the user through a guided menu to select a rank
+def get_rank_selection():
+    while True:
+        category = input("Choose category:\n1. Enlisted\n2. Officer\n> ")
+        if category == '1' or category == '2':
+            break
+        print("Invalid input, try again")
+    if category == '1':
+        ranks = ('Spc1', 'Spc2', 'Spc3', 'Spc4', 'Sgt', 'TSgt', 'MSgt', 'SMSgt', 'CMSgt')
+    else:
+        ranks = ('2d Lt', 'Lt', 'Capt', 'Maj', 'Lt Col', 'Col', 'BGen', 'Maj Gen', 'Lt Gen', 'Gen')
+    while True:
+        print("Choose rank:")
+        index = 1
+        for rank in ranks:
+            print(str(index) + ". " + rank)
+            index = index + 1
+        choice = input("> ")
+        if choice.isdigit() and 1 <= int(choice) <= len(ranks):
+            selected_rank = ranks[int(choice) - 1]
+            confirm = input("You selected " + selected_rank + ". Confirm? (Y/N): ")
+            if confirm.upper() == 'Y':
+                return selected_rank
+        else:
+            print("Invalid input, try again")
+
 # Check whether a grade starts with E or O followed by digits (hyphen optional)
 def is_valid_grade(grade):
     if grade == '':
@@ -206,11 +232,10 @@ def log_new_shift():
     member_last_name = get_valid_name("Enter last name: ")
     member_first_name = get_valid_name("Enter first name: ")
     member_middle_initial = get_valid_name("Enter middle initial: ")
-    member_rank = input("Enter rank: ")
+    member_rank = get_rank_selection()
     member_grade = get_valid_grade("Enter grade (e.g. E-3): ")
     member_email = get_valid_email("Enter email: ")
     member_phone = get_valid_phone("Enter phone number: ")
-
     # Gather information about the shift
     shift_start_year = get_valid_year("Enter shift start year (YYYY): ")
     shift_start_month = get_valid_month("Enter shift start month: ")
@@ -222,7 +247,6 @@ def log_new_shift():
     shift_end_day = get_valid_day("Enter shift end day: ", shift_end_month)
     shift_end_hour = get_valid_hour("Enter shift end hour (HH, 24-hour): ")
     shift_end_minute = get_valid_minute("Enter shift end minute (MM): ")
-
     # Gather information about the tasks
     task_assigned = get_non_empty("Enter tasks assigned: ")
     task_completed = get_non_empty("Enter tasks completed: ")
