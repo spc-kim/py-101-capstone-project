@@ -188,8 +188,21 @@ def get_valid_minute(prompt):
             return value
         print("Invalid input, try again")
 
+# Check whether the input is not empty
+def is_not_empty(text):
+    return text != ''
+
+# Repeatedly prompt until a non-empty value is entered
+def get_non_empty(prompt):
+    while True:
+        value = input(prompt)
+        if is_not_empty(value):
+            return value
+        print("Invalid input, try again")
+
 # Gather all shift report fields from the user
 def log_new_shift():
+    # Gather information about the member
     member_last_name = get_valid_name("Enter last name: ")
     member_first_name = get_valid_name("Enter first name: ")
     member_middle_initial = get_valid_name("Enter middle initial: ")
@@ -197,6 +210,8 @@ def log_new_shift():
     member_grade = get_valid_grade("Enter grade (e.g. E-3): ")
     member_email = get_valid_email("Enter email: ")
     member_phone = get_valid_phone("Enter phone number: ")
+
+    # Gather information about the shift
     shift_start_year = get_valid_year("Enter shift start year (YYYY): ")
     shift_start_month = get_valid_month("Enter shift start month: ")
     shift_start_day = get_valid_day("Enter shift start day: ", shift_start_month)
@@ -207,7 +222,9 @@ def log_new_shift():
     shift_end_day = get_valid_day("Enter shift end day: ", shift_end_month)
     shift_end_hour = get_valid_hour("Enter shift end hour (HH, 24-hour): ")
     shift_end_minute = get_valid_minute("Enter shift end minute (MM): ")
-    task_assigned = input("Enter tasks assigned: ")
-    task_completed = input("Enter tasks completed: ")
-    task_remaining = input("Enter tasks remaining: ")
-    task_remarks = input("Enter tasks remarks: ")
+
+    # Gather information about the tasks
+    task_assigned = get_non_empty("Enter tasks assigned: ")
+    task_completed = get_non_empty("Enter tasks completed: ")
+    task_remaining = get_non_empty("Enter tasks remaining: ")
+    task_remarks = get_non_empty("Enter tasks remarks: ")
