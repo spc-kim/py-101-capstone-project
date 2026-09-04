@@ -29,55 +29,32 @@ def get_valid_name(prompt):
             return to_sentence_case(value)
         print("Invalid input, try again")
 
-# Prompt the user through a guided menu to select a rank
-def get_rank_selection():
+# Prompt the user through a guided menu to select a rank and grade
+def get_rank_and_grade_selection():
     while True:
-        category = input("Choose category:\n1. Enlisted\n2. Officer\n> ")
+        category = input("Select your rank category:\n1. Enlisted\n2. Officer\n> ")
         if category == '1' or category == '2':
             break
         print("Invalid input, try again")
     if category == '1':
-        ranks = ('Spc1', 'Spc2', 'Spc3', 'Spc4', 'Sgt', 'TSgt', 'MSgt', 'SMSgt', 'CMSgt')
+        rank_options = ('E-1\tSpc1', 'E-2\tSpc2', 'E-3\tSpc3', 'E-4\tSpc4', 'E-5\tSgt', 'E-6\tTSgt', 'E-7\tMSgt', 'E-8\tSMSgt', 'E-9\tCMSgt')
     else:
-        ranks = ('2d Lt', 'Lt', 'Capt', 'Maj', 'Lt Col', 'Col', 'BGen', 'Maj Gen', 'Lt Gen', 'Gen')
+        rank_options = ('O-1\t2d Lt', 'O-2\tLt', 'O-3\tCapt', 'O-4\tMaj', 'O-5\tLt Col', 'O-6\tCol', 'O-7\tBGen', 'O-8\tMaj Gen', 'O-9\tLt Gen', 'O-10\tGen')
     while True:
-        print("Choose rank:")
+        print("Choose rank and grade:")
         index = 1
-        for rank in ranks:
-            print(str(index) + ". " + rank)
+        for rank_option in rank_options:
+            option_grade, option_title = rank_option.split('\t')
+            print(str(index) + ". " + option_title + " (" + option_grade + ")")
             index = index + 1
         choice = input("> ")
-        if choice.isdigit() and 1 <= int(choice) <= len(ranks):
-            selected_rank = ranks[int(choice) - 1]
-            confirm = input("You selected " + selected_rank + ". Confirm? (Y/N): ")
+        if choice.isdigit() and 1 <= int(choice) <= len(rank_options):
+            selected_grade, selected_title = rank_options[int(choice) - 1].split('\t')
+            confirm = input("You selected " + selected_title + " (" + selected_grade + "). Confirm? (Y/N): ")
             if confirm.upper() == 'Y':
-                return selected_rank
+                return selected_grade, selected_title
         else:
             print("Invalid input, try again")
-
-# Check whether a grade starts with E or O followed by digits (hyphen optional)
-def is_valid_grade(grade):
-    if grade == '':
-        return False
-    prefix = grade[0].upper()
-    if prefix != 'E' and prefix != 'O':
-        return False
-    rest = grade[1:]
-    if rest.startswith('-'):
-        rest = rest[1:]
-    if rest == '':
-        return False
-    if not rest.isdigit():
-        return False
-    return True
-
-# Repeatedly prompt until a valid grade is entered, then return it uppercase
-def get_valid_grade(prompt):
-    while True:
-        value = input(prompt)
-        if is_valid_grade(value):
-            return value.upper()
-        print("Invalid input, try again")
 
 # Check whether an email is in the form username@domain.mil or .gov
 def is_valid_email(email):
@@ -232,8 +209,7 @@ def log_new_shift():
     member_last_name = get_valid_name("Enter last name: ")
     member_first_name = get_valid_name("Enter first name: ")
     member_middle_initial = get_valid_name("Enter middle initial: ")
-    member_rank = get_rank_selection()
-    member_grade = get_valid_grade("Enter grade (e.g. E-3): ")
+    member_grade, member_rank = get_rank_and_grade_selection()
     member_email = get_valid_email("Enter email: ")
     member_phone = get_valid_phone("Enter phone number: ")
     # Gather information about the shift
